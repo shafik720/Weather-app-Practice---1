@@ -4,6 +4,7 @@ bodyHeader = document.querySelector('.body-header'),
 bodyHeaderP = bodyHeader.querySelector('p'),
 locationBtn = document.querySelector('.app-footer button'),
 celcius = document.querySelector('.numb'),
+backIcon = document.querySelector('.app-header i'),
 inputField = document.querySelector('.body-input input');
 
 inputField.addEventListener('keyup', e=>{
@@ -20,6 +21,11 @@ inputField.addEventListener('keyup', e=>{
         .then(res=>res.json())
         .then(data=>showWeather(data))
     }
+})
+
+backIcon.addEventListener('click',()=>{
+    wrapper.classList.remove('active')
+    bodyHeader.classList.remove('pending', 'error');
 })
 
 // working with location button
