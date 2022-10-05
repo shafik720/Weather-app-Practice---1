@@ -5,6 +5,7 @@ bodyHeaderP = bodyHeader.querySelector('p'),
 locationBtn = document.querySelector('.app-footer button'),
 celcius = document.querySelector('.numb'),
 backIcon = document.querySelector('.app-header i'),
+weatherIcon = document.querySelector('.top-details img'),
 inputField = document.querySelector('.body-input input');
 
 const keys = '3f2f9bc259ce45af21bda8132115c015';
@@ -73,5 +74,24 @@ function showWeather(data){
         document.getElementById('city').innerText = `${name} , ${country}`;
         document.getElementById('celcius').innerText = feels_like;
         document.getElementById('humidity').innerText = humidity;
+
+        if(id==200){
+            weatherIcon.src = 'Weather Icons/rain.svg'
+        }else if(id>=200 && id<=232){
+            weatherIcon.src = 'Weather Icons/storm.svg'
+        }else if(id>=300 && id<=321){
+            weatherIcon.src = 'Weather Icons/haze.svg'
+        }else if(id>=600 && id<=622){
+            weatherIcon.src = 'Weather Icons/snow.svg'
+        }else if(id>=701 && id<=781){
+            weatherIcon.src = 'Weather Icons/haze.svg'
+        }else if(id>=500 && id<=531){
+            weatherIcon.src = 'Weather Icons/rain.svg'
+        }else if(id>=801 && id<=804){
+            weatherIcon.src = 'Weather Icons/cloud.svg'
+        }
+        else{
+            weatherIcon.src = 'Weather Icons/clear.svg'
+        }
     }
 }
