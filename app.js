@@ -7,12 +7,14 @@ celcius = document.querySelector('.numb'),
 backIcon = document.querySelector('.app-header i'),
 inputField = document.querySelector('.body-input input');
 
+const keys = '3f2f9bc259ce45af21bda8132115c015';
+let apiUrl;
+
 inputField.addEventListener('keyup', e=>{
     if(e.key=='Enter' && inputField.value != ''){
         let inputCity = inputField.value;
         
-        const keys = '3f2f9bc259ce45af21bda8132115c015';
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity}&appid=${keys}&units=metric`;
+        apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity}&appid=${keys}&units=metric`;
 
         bodyHeader.classList.add('pending');
         bodyHeaderP.innerText = `Getting Information ....... `;
@@ -40,7 +42,13 @@ locationBtn.addEventListener('click',e=>{
 })
 
 function onSuccess(position){
-    console.log(position);
+    let {latitude, longitude} = position.coords
+    
+        apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${keys}&lang={lang}&units=metric`;
+
+        fetch(apiUrl)
+        .then(res=>res.json())
+        .then(data=>showWeather(data))
 }
 function onError(msg){
         bodyHeader.classList.replace('pending','error');
