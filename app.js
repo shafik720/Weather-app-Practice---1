@@ -3,6 +3,7 @@ wrapper = document.querySelector('.wrapper'),
 bodyHeader = document.querySelector('.body-header'),
 bodyHeaderP = bodyHeader.querySelector('p'),
 locationBtn = document.querySelector('.app-footer button'),
+celcius = document.querySelector('.numb'),
 inputField = document.querySelector('.body-input input');
 
 inputField.addEventListener('keyup', e=>{
@@ -10,7 +11,7 @@ inputField.addEventListener('keyup', e=>{
         let inputCity = inputField.value;
         
         const keys = '3f2f9bc259ce45af21bda8132115c015';
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity}&appid=${keys}`;
+        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputCity}&appid=${keys}&units=metric`;
 
         bodyHeader.classList.add('pending');
         bodyHeaderP.innerText = `Getting Information ....... `;
@@ -21,6 +22,7 @@ inputField.addEventListener('keyup', e=>{
     }
 })
 
+// working with location button
 locationBtn.addEventListener('click',e=>{
     bodyHeader.classList.add('pending');
     bodyHeaderP.innerText = `Getting Information ....... `;
@@ -39,10 +41,23 @@ function onError(msg){
         bodyHeaderP.innerText = msg.message;
 }
 
-function showWeather(any){
-    console.log(any);
-    if(any.cod=='404'){
+function showWeather(data){
+    console.log(data);
+    if(data.cod=='404'){
         bodyHeader.classList.replace('pending','error');
         bodyHeaderP.innerText = `${inputField.value}  is not a valid City`;
+    }else{
+        wrapper.classList.add('active');
+
+        let{temp, humidity, feels_like} = data.main;
+        let {name} = data;
+        let {main, id} = data.weather[0];
+        let {country} = data.sys
+
+        celcius.innerText = Math.floor(temp);
+        document.querySelector('.weather').innerText = main;
+        document.getElementById('city').innerText = `${name} , ${country}`;
+        document.getElementById('celcius').innerText = feels_like;
+        document.getElementById('humidity').innerText = humidity;
     }
 }
